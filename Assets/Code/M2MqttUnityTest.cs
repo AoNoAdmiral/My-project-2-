@@ -60,17 +60,13 @@ namespace M2MqttUnity.Examples
         public string Machine_Id;
         public string Topic_to_Subcribe="";
         public string msg_received_from_topic="";
-        public Image text_displaya;
-        public Image text_displayb;
-        public Image text_displaya1;
-        public Image text_displayb1;
         public Button PRESS;
         public GameObject Page1;
         public GameObject Page2;
-        public GameObject a1;
-        public GameObject b1;
-        public GameObject a2;
-        public GameObject b2;
+        public Image a1;
+        public Image b1;
+        public Image a2;
+        public Image b2;
         public int Heat;
         public int Humd;
         public List<int> AX = new List<int>();
@@ -85,15 +81,40 @@ namespace M2MqttUnity.Examples
         //}
 	public void UpdateBeforeConnect(){
 
-            this.brokerAddress = "mqttserver.tk";
-            this.brokerPort = 1883;
-            this.mqttUserName = "bkiot";
-            this.mqttPassword = "12345678";
-            // this.brokerAddress = addressInputField.text;
+            // this.brokerAddress = "mqttserver.tk";
             // this.brokerPort = 1883;
-            // this.mqttUserName = userInputField.text;
-            // this.mqttPassword = pwdInputField.text;
+            // this.mqttUserName = "bkiot";
+            // this.mqttPassword = "12345678";
+            this.brokerAddress = addressInputField.text;
+            this.brokerPort = 1883;
+            this.mqttUserName = userInputField.text;
+            this.mqttPassword = pwdInputField.text;
 	}
+    public void HON(){
+        b1.gameObject.SetActive(true);
+        b2.gameObject.SetActive(false);
+        Debug.Log(1);
+        client.Publish("/bkiot/STUDENT_ID/led", System.Text.Encoding.UTF8.GetBytes("{\"device\": \"LED\", \"status\": \"ON\"}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+    }
+    public void HOFF(){
+        b1.gameObject.SetActive(false);
+        b2.gameObject.SetActive(true);
+        Debug.Log(0);
+        client.Publish("/bkiot/1914472/lead", System.Text.Encoding.UTF8.GetBytes("{\"device\": \"LED\", \"humidity\": \"OFF\"}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+    }
+        
+    public void PON(){
+        a1.gameObject.SetActive(true);
+        a2.gameObject.SetActive(false);
+        Debug.Log(2);
+        client.Publish("/bkiot/STUDENT_ID/pump", System.Text.Encoding.UTF8.GetBytes("{\"device\": \"PUMP\", \"status\": \"ON\"}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+    }
+    public void POFF(){
+        a1.gameObject.SetActive(false);
+        a2.gameObject.SetActive(true);
+        Debug.Log(3);
+        client.Publish("/bkiot/1914472/pump", System.Text.Encoding.UTF8.GetBytes("{\"device\": \"PUMP\", \"humidity\": \"OFF\"}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+    }
         public void TestPublish()
         {
             if (connect){
@@ -245,10 +266,6 @@ namespace M2MqttUnity.Examples
         {
             Page1.SetActive(false);
             Page2.SetActive(true);
-            a1.SetActive(true);
-            b1.SetActive(true);
-            a2.SetActive(false);
-            b2.SetActive(false);
             string msg = System.Text.Encoding.UTF8.GetString(message);
             msg_received_from_topic = msg;
             char[] charsToTrim1 = {'{','}',':'};
