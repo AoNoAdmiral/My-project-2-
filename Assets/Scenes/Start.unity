@@ -1329,7 +1329,7 @@ MonoBehaviour:
   isEncrypted: 0
   connectionDelay: 500
   timeoutOnConnection: 30000
-  autoConnect: 0
+  autoConnect: 1
   mqttUserName: bkiot
   mqttPassword: 12345678
   addressInputField: {fileID: 181674021}
@@ -1342,6 +1342,7 @@ MonoBehaviour:
   Topic_to_Subcribe: 
   msg_received_from_topic: 
   PRESS: {fileID: 1559773611}
+  UPRESS: {fileID: 1854870434}
   Page1: {fileID: 424887211}
   Page2: {fileID: 1498581408}
   a1: {fileID: 1331641410}

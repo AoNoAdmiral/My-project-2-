@@ -61,6 +61,7 @@ namespace M2MqttUnity.Examples
         public string Topic_to_Subcribe="";
         public string msg_received_from_topic="";
         public Button PRESS;
+        public Button UPRESS;
         public GameObject Page1;
         public GameObject Page2;
         public Image a1;
@@ -117,7 +118,7 @@ namespace M2MqttUnity.Examples
     }
         public void TestPublish()
         {
-            if (connect){
+            if (connect==true){
                 string x = "/bkiot/1914472/status";
                 if (a%100==0)
                     client.Publish(x, System.Text.Encoding.UTF8.GetBytes("{\"temperature\": \"30\", \"humidity\": \"30\"}"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
@@ -188,6 +189,7 @@ namespace M2MqttUnity.Examples
         protected override void UnsubscribeTopics()
         {
             client.Unsubscribe(new string[] { "/bkiot/1914472/status" });
+            connect = false;
         }
 
         protected override void OnConnectionFailed(string errorMessage)
@@ -252,11 +254,17 @@ namespace M2MqttUnity.Examples
             //}
             //updateUI = false;
         }
-
+        protected void back(){
+            Page1.SetActive(true);
+            Page2.SetActive(false);
+            connect=false;
+            Disconnect();       
+        }
         protected override void Start()
         {
             //SetUiMessage("Ready.");
             PRESS.onClick.AddListener(Connect);
+            UPRESS.onClick.AddListener(back);
             Topic_to_Subcribe = Topic + Machine_Id;
             updateUI = true;
             base.Start();
